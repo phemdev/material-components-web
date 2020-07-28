@@ -21,34 +21,44 @@
  * THE SOFTWARE.
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+/** Banner element classes. */
+export const cssClasses = {
+  CLOSING: 'mdc-banner--closing',
+  OPEN: 'mdc-banner--open',
+  OPENING: 'mdc-banner--opening',
+};
 
-describe('theme.test.scss', () => {
-  it('should transform theme keys to custom property for theme.property()',
-     () => {
-       const filePath = path.join(__dirname, 'theme.test.css');
-       const css = fs.readFileSync(filePath, 'utf8').trim();
-       expect(css).toEqual(`.test {
-  color: #6200ee;
-  /* @alternate */
-  color: var(--mdc-theme-primary, #6200ee);
-}`);
-     });
+/** Banner numbers. */
+export const numbers = {
+  BANNER_ANIMATION_CLOSE_TIME_MS: 250,
+  BANNER_ANIMATION_OPEN_TIME_MS: 300,
+};
 
-  it('host-aware test produces expected output',
-     () => {
-       const filePath = path.join(__dirname, 'shadow-dom.test.css');
-       const css = fs.readFileSync(filePath, 'utf8').trim();
-       expect(css).toEqual(`:host([lowered]), :host(:not(.hidden)[outlined][lowered]), :host .my-class[lowered], gm-fab[lowered] {
-  color: blue;
+/** Banner events. */
+export const events = {
+  CLOSED: 'MDCBanner:closed',
+  CLOSING: 'MDCBanner:closing',
+  OPENED: 'MDCBanner:opened',
+  OPENING: 'MDCBanner:opening',
+};
+
+/** Banner selectors. */
+export const selectors = {
+  CONTENT: '.mdc-banner__content',
+  PRIMARY_ACTION: '.mdc-banner__primary-action',
+  SECONDARY_ACTION: '.mdc-banner__secondary-action',
+  TEXT: '.mdc-banner__text',
+};
+
+/** Reason as to why the banner was closed. */
+export enum CloseReason {
+  // Indicates the banner was closed via primary action button.
+  PRIMARY = 'primary',
+  // Indicates the banner was closed via secondary action button.
+  SECONDARY = 'secondary',
 }
-:host([lowered]:hover), :host(:not(.hidden)[outlined][lowered]:hover), :host .my-class[lowered]:hover, gm-fab[lowered]:hover {
-  background-color: red;
-}
 
-:host(:focus), :host(:not(.hidden)[outlined]:focus), :host .my-class:focus, gm-fab:focus, :host, :host(:not(.hidden)[outlined]), :host .my-class, gm-fab {
-  border-color: green;
-}`);
-     });
-});
+/** Interface for the detail of the closing and closed events emitted. */
+export interface MDCBannerCloseEventDetail {
+  reason?: CloseReason|string;
+}
